@@ -1,0 +1,23 @@
+extends base
+
+block vars
+	- var title = "quiz"
+
+block body
+	.container
+		h2 questions
+		.question
+			h3.question-title #{body}
+			form#myform(action="")
+				input(type="radio", name="answer", value="A").question-check
+				p #{option1}
+				input(type="radio", name="answer", value="B").question-check
+				p #{option2}
+				input(type="radio", name="answer", value="C").question-check
+				p #{option3}
+				a#next-q(href="/next") Next
+				a#submit-q(href="#") Submit
+		h3#correct
+	script(src="http://code.jquery.com/jquery-1.12.0.min.js")
+	script(src="http://code.jquery.com/jquery-migrate-1.2.1.min.js")
+	//- script(src="static/javascript/quiz.js")
