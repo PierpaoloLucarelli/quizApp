@@ -29,23 +29,7 @@ app.use("/static", express.static(__dirname + '/public'));
 
 //get the form for the new question
 app.post("/upload", function(req,res){
-	var quest = new questions({
-		quest_id: req.body.quest_id,
-		body: req.body.body,
-		option1: req.body.option1,
-		option2: req.body.option2,
-		option3: req.body.option3,
-		answer: req.body.answer
-	});
-
-	quest.save(function(err){
-		if(err){
-			var err = "something bad happended";
-		} else {
-			res.redirect("/");
-		}
-
-	})
+	db.uploadQuestion(req, res);
 })
 
 app.get("/upload", function(req,res){
