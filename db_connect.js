@@ -1,22 +1,8 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
-
-//connect to db
-mongoose.connect("mongodb://localhost/questions");
-
-//connect to quest collection
-var questions = mongoose.model("questions", new Schema({
-	quest_id: Number,
-	body: String,
-	option1: String,
-	option2: String,
-	option3: String,
-	answer: String
-}), "quest");
+var models = require("./models.js");
 
 var db_length = 1;
 var getDbLength = function(){
-	questions.count({}, function(err, count){
+	models.questions.count({}, function(err, count){
 		if(err) return handleError(err);
 		//set number of questions
     	db_length = count;
@@ -34,7 +20,7 @@ var getQuestions = function(req, res){
 	var q_index = Math.floor(Math.random() * db_length);
 	console.log(q_index);
 	//find element in db
-	questions.findOne({quest_id: q_index}, function(err, quest){
+	models.questions.findOne({quest_id: q_index}, function(err, quest){
 	if(!quest){
 		res.send("Not found");
 	} else {
@@ -51,7 +37,7 @@ var getQuestions = function(req, res){
 }
 
 var uploadQuestion = function(req, res){
-	var quest = new questions({
+	var quest = new models.questions({
 		quest_id: req.body.quest_id,
 		body: req.body.body,
 		option1: req.body.option1,
@@ -75,4 +61,11 @@ var uploadQuestion = function(req, res){
 
 module.exports.getQuestions = getQuestions;
 module.exports.uploadQuestion = uploadQuestion;
+
+//thigns to install
+// npm install express
+// npm install mongoose
+
+// use questions
+// db.quest.insert({question_id: 1, body: "question body", option1: "option1", option2: "option2", option3: "option3", answer: "C"})
 

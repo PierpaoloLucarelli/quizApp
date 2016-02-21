@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+
 var app = express();
 // var mongoose = require('mongoose');
 // var Schema = mongoose.Schema;
@@ -29,8 +30,16 @@ app.use("/static", express.static(__dirname + '/public'));
 
 //get the form for the new question
 app.post("/upload", function(req,res){
-	db.uploadQuestion(req, res);
-})
+	db.uploadQuestion("req, res");
+});
+
+app.post("/login", function(req,res){
+	res.send(req.body);
+});
+
+app.get("/login", function(req,res){
+	res.render("login.jade");
+});
 
 app.get("/upload", function(req,res){
 	// db.getQuestions();
@@ -43,6 +52,10 @@ app.get("/", function(req, res){
 
 app.get("/next", function(req,res){
 	res.redirect("/");
+})
+
+app.get("/example", function(req,res){
+	res.render("index.jade");
 })
 
 

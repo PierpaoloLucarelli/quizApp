@@ -1,0 +1,12 @@
+extends base
+
+block vars
+	- var title = "insert new question"
+block body
+	h1 Login
+	form#new-question(method="post")
+		h3 Email
+		textarea(type="email" name="email")
+		h3 Password
+		input(type="password" name="password")
+		input(type="submit")
