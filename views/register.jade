@@ -1,15 +1,15 @@
 extends base
 
 block vars
-	- var title = "login"
+	- var title = "register"
 block body
 	.container
-
-		h1 Login
-		h3.error #{error}
+		h1 Register
 		form.new-user(method="post")
 			h3 Email
 			input(type="email" name="email")
+			h3 Username
+			input(type="text" name="username")
 			h3 Password
 			input(type="password" name="password")
 			br

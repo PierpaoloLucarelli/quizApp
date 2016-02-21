@@ -5,9 +5,10 @@ var ObjectId = Schema.ObjectId;
 mongoose.connect("mongodb://localhost/questions");
 
 // // define Schemas
-// connect to quest collection
+
+
+//questions
 var questions = mongoose.model("questions", new Schema({
-	quest_id: 		Number,
 	body: 			String,
 	option1: 		String,
 	option2: 		String,
@@ -15,18 +16,20 @@ var questions = mongoose.model("questions", new Schema({
 	answer: 		String	
 }), "quest");
 
+
+//users
 var user = mongoose.model("users", new Schema({
-	email: 			String,
-	password: 		String,
+	email: 			{type: String, unique: true, required: true, dropDups: true},
+	username: 		{type: String, unique: true, required: true},
+	password: 		{type: String, required: true},
+	scores: 		[]
 }), "users");
 
 
 
-// var questions = mongoose.model("quest", question);
-// var users = mongoose.model("users", user);
-
+//export to app.js
 module.exports.questions = questions;
-module.exports.userr = user;
+module.exports.user = user;
 
 
 
