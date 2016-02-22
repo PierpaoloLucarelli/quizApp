@@ -1,8 +1,10 @@
 extends base
 
-
 block vars
 	- var title = "Dashboard"
+
+block nav_content
+	a Welcome #{user.username}
 
 block body
 	.container
@@ -22,4 +24,3 @@ block body
 		a(href="/upload") Create a new qestion
 	script(src="http://code.jquery.com/jquery-1.12.0.min.js")
 	script(src="http://code.jquery.com/jquery-migrate-1.2.1.min.js")
-	//- script(src="static/javascript/quiz.js")

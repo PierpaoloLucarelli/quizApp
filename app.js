@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var sessions = require("client-sessions");
 var app = express();
 
 // ---------------------------
@@ -15,6 +16,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'jade');
 
 app.use("/static", express.static(__dirname + '/public'));
+
+app.use(sessions({
+	cookieName: 'session',
+	secret: 'xzjhgzxcjhgzxcjhg882hg2jhg2GG',
+	duration: 30 * 60 * 1000,
+	activeDuration: 5 * 60 * 1000
+}));
 
 
 //get the form for the new question
@@ -43,7 +51,13 @@ app.get("/upload", function(req,res){
 });
 
 app.get("/dashboard", function(req, res){
-	db.getQuestions(res);
+	console.log(users.checkSession(req,res));
+	if(users.checkSession(req,res)){
+		db.getQuestions(res);
+	} else {
+		console.log(users.checkSession(req,res));
+		res.redirect("/login");
+	}
 });
 
 app.get("/next", function(req,res){
