@@ -1,4 +1,5 @@
 var models = require("./models.js");
+var db = require("./db_questions.js");
 
 //save user
 var saveUser = function(req, res){
@@ -38,26 +39,47 @@ var verifyUser = function(req,res){
 }
 
 var checkSession = function(req,res){
-	var isLogedIn = true;
-	console.log("runnign session");
 	if(req.session && req.session.foundUser){
-		models.user.findOne({email: req.session.foundUser.email}, function(err, userSession){
-			if(!userSession){
-				req.session.reset();
-				console.log("user not found");
-			} else {
-				isLogedIn = true;
-				console.log("found the users");
-				res.locals.user = userSession;
-			}
-		})
+		return true;
 	} else {
-		console.log("session not found");
+		return false;
 	}
 
-	return isLogedIn;
 }
+
+var getLoggedInUser = function(req,res, app){
+	console.log(req.session.foundUser.email);
+	models.user.findOne({email: req.session.foundUser.email}, function(err, userSession){
+			if(!userSession){
+				req.session.reset();
+			} else {
+				console.log("found the users");
+				app.locals.user = userSession;
+			}
+		});
+}
+
+//get profile
+
+var getProfile = function(req,res){
+	console.log(req.query.username);
+	models.user.findOne({username: req.query.username}, function(err, foundUser){
+		if(!foundUser){
+			res.send("user not found");
+		} else {
+			var params = {
+				name: foundUser.username,
+				email: foundUser.email,
+				score: foundUser.scores
+			}
+			res.render("profile.jade", params);
+		}
+	});
+}
+
 
 module.exports.saveUser = saveUser;
 module.exports.verifyUser = verifyUser;
 module.exports.checkSession = checkSession;
+module.exports.getLoggedInUser = getLoggedInUser;
+module.exports.getProfile = getProfile;

@@ -108,7 +108,16 @@ rounder borders */
 }
 
 
+/*dahsboard*/
 
+.user-welcome{
+	float: right;
+	margin-right: 2%;
+}
+
+.user-username{
+	padding: 0 5px;
+}
 
 
 

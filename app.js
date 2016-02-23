@@ -38,7 +38,7 @@ app.get("/register", function(req,res){
 	res.render("register.jade");
 });
 
-app.get("/login", function(req,res){
+app.get("/login", function(req,res, errorMsg){
 	res.render("login.jade");
 });
 
@@ -51,11 +51,11 @@ app.get("/upload", function(req,res){
 });
 
 app.get("/dashboard", function(req, res){
-	console.log(users.checkSession(req,res));
+
 	if(users.checkSession(req,res)){
+		users.getLoggedInUser(req,res, app);
 		db.getQuestions(res);
 	} else {
-		console.log(users.checkSession(req,res));
 		res.redirect("/login");
 	}
 });
@@ -70,6 +70,20 @@ app.get("/example", function(req,res){
 
 app.get("/", function(req,res){
 	res.render("index.jade");
+});
+
+app.get('/profile/', function(req,res){
+	if(users.checkSession(req,res)){
+		users.getLoggedInUser(req,res, app);
+		users.getProfile(req,res);
+	} else {
+		res.redirect("/login");
+	}
+});
+
+app.get("/logout", function(req,res){
+	req.session.reset();
+	res.redirect('/');
 });
 
 

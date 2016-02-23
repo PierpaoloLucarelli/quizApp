@@ -1,0 +1,15 @@
+extends base
+
+block vars
+	- var title = user.username
+
+block nav_content
+	a(href="/logout").user-username Logout
+	h3.user-welcome Welcome  #[a(href= '/profile/?username=' + user.username).user-username #{user.username} ]
+
+block body
+	.container
+		h1 Hello #{name}
+		h3 Your email: #{email}
+		h3 Your score:: #{score} 
+	
