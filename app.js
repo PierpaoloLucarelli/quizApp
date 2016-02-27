@@ -25,6 +25,7 @@ app.use(sessions({
 }));
 
 
+
 //get the form for the new question
 app.post("/upload", function(req,res){
 	db.uploadQuestion(req, res);
@@ -61,7 +62,8 @@ app.get("/dashboard", function(req, res){
 });
 
 app.get("/next", function(req,res){
-	res.redirect("/");
+	// res.redirect("/dashboard");
+	db.questionToJson(res);
 });
 
 app.get("/example", function(req,res){

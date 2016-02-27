@@ -1,5 +1,5 @@
 var models = require("./models.js");
-var db = require("./db_questions.js");
+// var db = require("./db_questions.js");
 
 //save user
 var saveUser = function(req, res){
@@ -48,12 +48,10 @@ var checkSession = function(req,res){
 }
 
 var getLoggedInUser = function(req,res, app){
-	console.log(req.session.foundUser.email);
 	models.user.findOne({email: req.session.foundUser.email}, function(err, userSession){
 			if(!userSession){
 				req.session.reset();
 			} else {
-				console.log("found the users");
 				app.locals.user = userSession;
 			}
 		});
@@ -62,7 +60,6 @@ var getLoggedInUser = function(req,res, app){
 //get profile
 
 var getProfile = function(req,res){
-	console.log(req.query.username);
 	models.user.findOne({username: req.query.username}, function(err, foundUser){
 		if(!foundUser){
 			res.send("user not found");
